@@ -1,3 +1,4 @@
+# pip install Flask
 from flask import Flask, render_template
 # pip install Flask-MQTT
 from flask_mqtt import Mqtt
@@ -49,9 +50,8 @@ def handle_mqtt_message(client,userdata,message):
         data = dict(
             message = message.payload.decode()
         )
-        # 타임스탬프 찍어서 json형태로 리턴    
+        # 타임스탬프 찍어서 json형태로 allData 리스트에 저장. 
         allData.append(trans.transMessageToJson(trans.timestamp(data)))
-        trans.saveJsonInList('data.json',allData)
 
 
 
@@ -65,7 +65,7 @@ def main():
 def generic():
     return render_template('generic.html')
 
-
+#TODO: 한 변수에 한꺼번에 보내는 것보다는 여러개로 나눠서 보내는게 좋을 듯 함. 
 @app.route('/elements.html')
 def elements():
     print(allData)
