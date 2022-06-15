@@ -17,13 +17,14 @@ trans = MessageToJson.MessageToJson()
 mqtt =Mqtt(app)
 
 def schedulerFunction():
-    print("Scheduler is working")
+    print("Scheduler is working\n")
     if len(allData) > 1:
+        print("data move to file")
         trans.saveJsonInListAuto(allData)
         allData.clear #리스트에 데이터 파일로 욺기고 초기화
 
 sched = BackgroundScheduler(daemon=True)
-sched.add_job(schedulerFunction,'cron',hour = '24') #시간(스캐줄)에 맞춰 함수부르기
+sched.add_job(schedulerFunction,'cron',second = '30') #시간(스캐줄)에 맞춰 함수부르기
 if __name__ == '__main__':
     app.run(debug=True)
 sched.start()
