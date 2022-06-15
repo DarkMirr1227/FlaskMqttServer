@@ -60,7 +60,7 @@ class MessageToJson:
         '''
         first_time = time.struct_time(_list[0]['time']) #json으로 변환된 시간을 다시 원래 struct_time 형태로 변환
         last_time = time.struct_time(_list[-1]['time'])
-        filename ='('+time.strftime('%Y-%m-%dT%H:%M:%SZ', first_time)+')~('+time.strftime('%Y-%m-%dT%H:%M:%SZ', last_time)+')'
+        filename ='('+time.strftime('%Y-%m-%dT%H_%M_%SZ', first_time)+')_('+time.strftime('%Y-%m-%dT%H_%M_%SZ', last_time)+').json'
         print(filename)
         self.saveJsonInList(filename,_list)
         
