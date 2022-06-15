@@ -1,8 +1,0 @@
-{
-    "serverUrl" : "127.0.0.1",
-    "port" : 1883,
-    "tenant" : "isaac-eng",
-    "username" : "epico",
-    "password" : "epico1234",
-    "sleepTime" : 5
-}
