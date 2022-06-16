@@ -1,9 +1,43 @@
 import json
+from operator import index
 import time
-
 # testString = "1 1.1 1.2 1.1 23.3 24.3 23.5 60" 
 # "id[1] current[3] temperture[3] vibration[1]"
 class MessageToJson:
+    def classificationById(self,_list,_id):
+        '''리스트에서 해당 id값만 있는 값을 새로운 리스트로 분류
+            args:
+                _list : 전체 리스트(json)
+                _id : target id
+            return:
+                new_list : _list에서 추출한 target id의 리스트
+        '''
+        new_list =list()
+        for item in _list:
+            if item['id']==_id:
+                new_list.append(item)
+        return new_list
+
+
+
+    def emptyJson(self):
+        ''' 값이 0으로 채워진 json을 리턴하는 함수
+            args:
+
+            return:
+                _emptyJson : 0으로 채워진 json
+        '''
+        _emptyJson = {
+                "id": 0,
+                "time": 0,
+                "current":0,
+            "temperature" :0,
+            "vibration" : 0
+        }
+        _list = list()
+        _list.append(_emptyJson)
+        _list.append(_emptyJson)
+        return _list
 
     def timestamp(self,_message):
         '''메세지 받을 때 timestamp 찍어주는 함수.
@@ -31,19 +65,20 @@ class MessageToJson:
         temptime = _dict['time'] 
         #_dict['message'] = {'message': '1 0.1 0.2 0.1 2.3 2.4 2.2 5'}
         #TODO: 다른형식의 데이터가 들어올 때 예외처리해줘야함.
-
-        message = str(_dict['message'])[13:-2].split(' ')
-        
-        # message의 string 값을 다른 데이터로 바꾸는 코드 필요 (mqtt보낼 메세지 먼저 정의하고 구현해야함.)
-        #TODO: 모터 id 관련해서 추가해야함. 
-        tempJson = {
-            "id": message[0],
-            "time": temptime,
-            "current":message[1:4],
-        "temperature" :message[4:7],
-        "vibration" :message[7]
-        }
-        return tempJson
+        try:
+            message = str(_dict['message'])[13:-2].split(' ')
+            # message의 string 값을 다른 데이터로 바꾸는 코드 필요 (mqtt보낼 메세지 먼저 정의하고 구현해야함.) 
+            tempJson = {
+                "id": message[0],
+                "time": temptime,
+                "current":message[1:4],
+            "temperature" :message[4:7],
+            "vibration" :message[7]
+            }
+            return tempJson
+        except IndexError as err:
+            print('error:' , err)
+            return None
 
     def saveJsonInList(self,_filename, _list):
         '''element가 json인 list를 파일로 저장하는 함수
