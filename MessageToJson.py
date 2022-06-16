@@ -1,27 +1,10 @@
 import json
-from operator import index
 import time
 # testString = "1 1.1 1.2 1.1 23.3 24.3 23.5 60" 
 # "id[1] current[3] temperture[3] vibration[1]"
 class MessageToJson:
-    def classificationById(self,_list,_id):
-        '''리스트에서 해당 id값만 있는 값을 새로운 리스트로 분류
-            args:
-                _list : 전체 리스트(json)
-                _id : target id
-            return:
-                new_list : _list에서 추출한 target id의 리스트
-        '''
-        new_list =list()
-        for item in _list:
-            if item['id']==_id:
-                new_list.append(item)
-        return new_list
-
-
-
     def emptyJson(self):
-        ''' 값이 0으로 채워진 json을 리턴하는 함수
+        ''' 값이 0으로 채워진 json(dict)을 2개를 가진 리스트를 리턴하는 함수
             args:
 
             return:
