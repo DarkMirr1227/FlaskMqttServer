@@ -3,6 +3,7 @@ import time
 # testString = "1 1.1 1.2 1.1 23.3 24.3 23.5 60" 
 # "id[1] current[3] temperture[3] vibration[1]"
 class MessageToJson:
+
     def emptyJson(self):
         ''' 값이 0으로 채워진 json(dict)을 2개를 가진 리스트를 리턴하는 함수
             args:
@@ -32,7 +33,7 @@ class MessageToJson:
                 dict : [time, message]
         '''
         return dict(
-            time = time.gmtime(), message = _message
+            time = time.strftime('%Y-%m-%dT%H_%M_%SZ', time.gmtime()), message = _message
         )
 
     def transMessageToJson(self,_dict):
