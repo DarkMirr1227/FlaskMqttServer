@@ -18,7 +18,7 @@ def schedulerFunction():
         trans.saveJsonInListAuto(allData)
         allData.clear() #리스트에 데이터 파일로 욺기고 초기화
 
-# 처음 한번 동작하는 코드 #
+# 처음 한번 동작하는 코드 시작 #
 if os.environ.get('WERKZEUG_RUN_MAIN') == 'true': #flask에서 디버그모드에서 2번 반복되는 것을 방지하기 위함 초기화할 함수는 여기서만
     print("INIT")
     app = Flask(__name__)
