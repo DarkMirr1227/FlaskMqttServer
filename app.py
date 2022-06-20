@@ -5,32 +5,37 @@ from flask_mqtt import Mqtt
 # pip install apscheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 import MessageToJson
-app = Flask(__name__)
-app.config['MQTT_BROKER_URL'] = '127.0.0.1'
-app.config['MQTT_BROKER_PORT'] = 1883
-app.config['MQTT_UERSNAME'] = ''
-app.config['MQTT_PASSWORD'] = ''
-SUBTOPIC =  's/us'
+import os
 global data
 global allData
-allData = list()
-trans = MessageToJson.MessageToJson()
-mqtt =Mqtt(app)
 
 def schedulerFunction():
     global allData
     print("Scheduler is working\n")
     print("list lenth :",len(allData))
-    if len(allData) > 2:
+    if len(allData) > 1:
         print("data move to file")
         trans.saveJsonInListAuto(allData)
         allData.clear() #리스트에 데이터 파일로 욺기고 초기화
 
-sched = BackgroundScheduler(daemon=True,timezone='Asia/Seoul')
-sched.add_job(schedulerFunction,'cron', minute = '0') #시간(스캐줄)에 맞춰 함수부르기
-if __name__ == '__main__':
-    app.run(debug=True)
-sched.start()
+# 처음 한번 동작하는 코드 시작 #
+if os.environ.get('WERKZEUG_RUN_MAIN') == 'true': #flask에서 디버그모드에서 2번 반복되는 것을 방지하기 위함 초기화할 함수는 여기서만
+    print("INIT")
+    app = Flask(__name__)
+    app.config['MQTT_BROKER_URL'] = '127.0.0.1'
+    app.config['MQTT_BROKER_PORT'] = 1883
+    app.config['MQTT_UERSNAME'] = ''
+    app.config['MQTT_PASSWORD'] = ''
+    SUBTOPIC =  's/us'
+    allData = list()
+    trans = MessageToJson.MessageToJson()
+    mqtt =Mqtt(app)
+    sched = BackgroundScheduler(daemon=True,timezone='Asia/Seoul')
+    sched.add_job(schedulerFunction,'cron', minute = '0') #시간(스캐줄)에 맞춰 함수부르기
+    if __name__ == '__main__':
+        app.run(debug=True)
+    sched.start()
+# 처음 한번 동작하는 코드 끝 #
 
 def create_app():
     app = Flask(__name__)
@@ -63,11 +68,12 @@ def main():
 def generic():
     return render_template('generic.html')
 
-#TODO: 한 변수에 한꺼번에 보내는 것보다는 여러개로 나눠서 보내는게 좋을 듯 함. 
+#TODO: 한 변수에 한꺼번에 보내는 것보다는 여러개로 나눠서 보내는게 좋을 듯 함.(갯수도 정해서)
 @app.route('/elements.html')
 def elements():
+    global allData
     print(allData)
-    if len(allData) == 0 :
+    if len(allData) < 2 :
         return render_template('elements.html',jsonData=trans.emptyJson())
     else:
         return render_template('elements.html',jsonData=allData)
