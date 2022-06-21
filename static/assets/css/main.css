@@ -988,7 +988,6 @@ section.special, article.special {
   text-align: center; }
 
 header p {
-  font-family: "Roboto Slab", serif;
   font-size: 1em;
   font-weight: 400;
   letter-spacing: 0.075em;
@@ -2085,7 +2084,6 @@ button,
   #header .logo {
     border-bottom: 0;
     color: inherit;
-    font-family: "Roboto Slab", serif;
     font-size: 1.125em; }
   #header .icons {
     text-align: right; }
@@ -2197,7 +2195,6 @@ button,
   -ms-user-select: none;
   user-select: none;
   color: #3d4449;
-  font-family: "Roboto Slab", serif;
   font-weight: 400;
   letter-spacing: 0.075em;
   list-style: none;
