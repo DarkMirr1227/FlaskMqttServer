@@ -29,12 +29,13 @@ if os.environ.get('WERKZEUG_RUN_MAIN') == 'true': #flask에서 디버그모드�
     SUBTOPIC =  's/us'
     allData = list()
     trans = MessageToJson.MessageToJson()
+    if __name__ == '__main__':
+        app.run(debug=True, host='0.0.0.0')
     mqtt =Mqtt(app)
     sched = BackgroundScheduler(daemon=True,timezone='Asia/Seoul')
     sched.add_job(schedulerFunction,'cron', minute = '0') #시간(스캐줄)에 맞춰 함수부르기
-    if __name__ == '__main__':
-        app.run(debug=True)
     sched.start()
+
 # 처음 한번 동작하는 코드 끝 #
 
 def create_app():
@@ -68,7 +69,6 @@ def main():
 def generic():
     return render_template('generic.html')
 
-#TODO: 한 변수에 한꺼번에 보내는 것보다는 여러개로 나눠서 보내는게 좋을 듯 함.(갯수도 정해서)
 @app.route('/elements.html')
 def elements():
     global allData
@@ -77,4 +77,3 @@ def elements():
         return render_template('elements.html',jsonData=trans.emptyJson())
     else:
         return render_template('elements.html',jsonData=allData)
-    
