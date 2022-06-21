@@ -260,7 +260,7 @@
 					type: 'line',
 					data: {
 						labels: [ {% for item in jsonData %}
-                                {{item['time']['tm_sec']}},
+                                {{item['time'][-6]}},
                                 {% endfor %}],
 						datasets: [{
 							label: 'temperture1',
@@ -325,7 +325,7 @@
 					type: 'line',
 					data: {
 						labels:[ {% for item in jsonData %}
-                                {{item['time']['tm_sec']}},
+                                {{item['time'][-6]}},
                                 {% endfor %}] ,
 						datasets: [{
 							label: 'current1',

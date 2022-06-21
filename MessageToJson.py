@@ -33,7 +33,7 @@ class MessageToJson:
                 dict : [time, message]
         '''
         return dict(
-            time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S_%f')[:-3], message = _message
+            time = datetime.utcnow().strftime('%Y-%m-%dT%Hh%Mm%S_%f')[:-3], message = _message
         )
 
     def transMessageToJson(self,_dict):
