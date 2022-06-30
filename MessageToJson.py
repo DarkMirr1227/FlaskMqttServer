@@ -6,16 +6,17 @@ class MessageToJson:
 
     def emptyJson(self):
         ''' 값이 0으로 채워진 json(dict)을 2개를 가진 리스트를 리턴하는 함수
-            args:
+
+            args: 
 
             return:
                 _emptyJson : 0으로 채워진 json
         '''
         _emptyJson = {
-                "id": 0,
-                "time": 0,
-                "current":0,
-            "temperature" :0,
+                "id": 1,
+                "time": '0000-00-00T00h00m00_000',
+                "current":[0,0,0],
+            "temperature" :[0,0,0],
             "vibration" : 0
         }
         _list = list()
@@ -28,7 +29,6 @@ class MessageToJson:
 
             args:
                 _message : mqtt에서 받은 메세지
-
             return:
                 dict : [time, message]
         '''
@@ -41,7 +41,6 @@ class MessageToJson:
 
             args:
                 _dict : 메세지가 저장된 딕셔너리
-
             return:
                 json : 모터id 와 센서값이 저장된 json
         '''
@@ -52,14 +51,17 @@ class MessageToJson:
         try:
             message = str(_dict['message'])[13:-2].split(' ')
             # message의 string 값을 다른 데이터로 바꾸는 코드 필요 (mqtt보낼 메세지 먼저 정의하고 구현해야함.) 
-            tempJson = {
-                "id": message[0],
-                "time": temptime,
-                "current":message[1:4],
-            "temperature" :message[4:7],
-            "vibration" :message[7]
-            }
-            return tempJson
+            JsonList = []
+            for i in range(0,40,8):
+                tempJson = {
+                    "id": message[i+0],
+                    "time": temptime,
+                    "current":message[i+1:i+4],
+                "temperature" :message[i+4:i+7],
+                "vibration" :message[i+7]
+                }
+                JsonList.append(tempJson)
+            return JsonList
         except IndexError as err:
             print('error:' , err)
             return None
@@ -77,6 +79,7 @@ class MessageToJson:
 
     def saveJsonInListAuto(self,_list):
         ''' 파일이름을 리스트에 시작time과 끝 time으로 저장해주는 함수
+
             args:
                 _list : json이 저장된 리스트
         '''
@@ -94,8 +97,7 @@ class MessageToJson:
         '''저장된 json파일을 다시 읽어오는 함수 (읽어서 Json형태로 변환)
 
             args:
-                _filename : 읽어올 파일 이름,경로
-            
+                _filename : 읽어올 파일 이름,경로       
             return:
                 json_object
         '''
