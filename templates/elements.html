@@ -68,21 +68,21 @@
 																<tr>
 																	<td>모터1</td>
 																	<td>온도</td>
-																	<td>{{jsonData[-1]['temperature'][0]}}</td>
-																	<td>{{jsonData[-1]['temperature'][1]}}</td>
-																	<td>{{jsonData[-1]['temperature'][2]}}</td>
+																	<td>{{jsonData[0][-1]['temperature'][0]}}</td>
+																	<td>{{jsonData[0][-1]['temperature'][1]}}</td>
+																	<td>{{jsonData[0][-1]['temperature'][2]}}</td>
 																</tr>
 																<tr>
 																	<td></td>
 																	<td>전류</td>
-																	<td>{{jsonData[-1]['current'][0]}}</td>
-																	<td>{{jsonData[-1]['current'][1]}}</td>
-																	<td>{{jsonData[-1]['current'][2]}}</td>
+																	<td>{{jsonData[0][-1]['current'][0]}}</td>
+																	<td>{{jsonData[0][-1]['current'][1]}}</td>
+																	<td>{{jsonData[0][-1]['current'][2]}}</td>
 																</tr>
 																<tr>
 																	<td></td>
 																	<td>진동</td>
-																	<td>{{jsonData[-1]['vibration'][0]}}</td>
+																	<td>{{jsonData[0][-1]['vibration']}}</td>
 																</tr>
 																<tr>
 																	<td>모터2</td>
@@ -115,8 +115,26 @@
 
 													<div>
 														<h3>Graph (Group1)</h3>
-														<canvas id="canvas1"></canvas>
-														<canvas id="canvas2"></canvas>
+														<canvas id="canvas1_t"></canvas>
+														<canvas id="canvas1_c"></canvas>
+													</div>
+
+													<div>
+														<h3>Graph (Group2)</h3>
+														<canvas id="canvas2_t"></canvas>
+														<canvas id="canvas2_c"></canvas>
+													</div>
+
+													<div>
+														<h3>Graph (Group3)</h3>
+														<canvas id="canvas3_t"></canvas>
+														<canvas id="canvas3_c"></canvas>
+													</div>
+
+													<div>
+														<h3>Graph (Group4)</h3>
+														<canvas id="canvas4_t"></canvas>
+														<canvas id="canvas4_c"></canvas>
 													</div>
 
 													<h4>Alternate</h4>
@@ -246,7 +264,6 @@
 								<footer id="footer">
 									<p class="copyright">&copy; Untitled. All rights reserved.</p>
 								</footer>
-
 						</div>
 					</div>
 
@@ -256,31 +273,31 @@
 			<!--script for chart.js -->
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 			<script>
-				new Chart(document.getElementById("canvas1").getContext('2d'), {
+				new Chart(document.getElementById("canvas1_t").getContext('2d'), {
 					type: 'line',
 					data: {
-						labels: [ {% for item in jsonData %}
-                                {{item['time'][-6]}},
+						labels: [ {% for item in jsonData[0] %}
+                                {{item['time'][-6:-5]}},
                                 {% endfor %}],
 						datasets: [{
-							label: 'temperture1',
-							data: [ {% for item in jsonData %}
-                                {{item['temperature'][0]}},
+							label: 'id 1',
+							data: [ {% for item in jsonData[0] %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
                                 {% endfor %}],
 							borderColor: "rgba(247, 16, 74, 1)",
 							fill: false,
 							lineTension: 0
 						},{
-							label: 'temperture2',
-							data: [ {% for item in jsonData %}
+							label: 'id 2',
+							data: [ {% for item in jsonData[0] %}
                                 {{item['temperature'][1]}},
                                 {% endfor %}],
 							borderColor: "rgba(120, 200, 74, 1)",
 							fill: false,
 							lineTension: 0
 						},{
-							label: 'temperture3',
-							data: [ {% for item in jsonData %}
+							label: 'id 3',
+							data: [ {% for item in jsonData[0] %}
                                 {{item['temperature'][2]}},
                                 {% endfor %}],
 							borderColor: "rgba(120, 74, 200, 1)",
@@ -321,15 +338,15 @@
 					}
 				});	
 
-				new Chart(document.getElementById("canvas2").getContext('2d'), {
+				new Chart(document.getElementById("canvas1_c").getContext('2d'), {
 					type: 'line',
 					data: {
-						labels:[ {% for item in jsonData %}
-                                {{item['time'][-6]}},
+						labels:[ {% for item in jsonData[0] %}
+                                {{item['time'][-6:-5]}},
                                 {% endfor %}] ,
 						datasets: [{
 							label: 'current1',
-							data: [ {% for item in jsonData %}
+							data: [ {% for item in jsonData[0] %}
                                 {{item['current'][0]}},
                                 {% endfor %}],
 							borderColor: "rgba(247, 16, 74, 1)",
@@ -337,7 +354,7 @@
 							lineTension: 0
 						},{
 							label: 'current2',
-							data: [ {% for item in jsonData %}
+							data: [ {% for item in jsonData[0] %}
                                 {{item['current'][1]}},
                                 {% endfor %}],
 							borderColor: "rgba(120, 200, 74, 1)",
@@ -345,7 +362,7 @@
 							lineTension: 0
 						},{
 							label: 'current3',
-							data: [ {% for item in jsonData %}
+							data: [ {% for item in jsonData[0] %}
                                 {{item['current'][2]}},
                                 {% endfor %}],
 							borderColor: "rgba(120, 74, 200, 1)",
