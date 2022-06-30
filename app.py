@@ -83,5 +83,5 @@ def elements():
         _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(trans.emptyJson(),3),classifyIdGroup) #데이터 그룹별로 분리하고 정리
         return render_template('elements.html',jsonData=_jsonData)
     else:
-        _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(allData,3),classifyIdGroup) #데이터 그룹별로 분리하고 정리
+        _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(allData,4),classifyIdGroup) #데이터 그룹별로 분리하고 정리
         return render_template('elements.html',jsonData=_jsonData)
