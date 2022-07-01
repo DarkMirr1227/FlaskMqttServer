@@ -62,7 +62,7 @@ def handle_mqtt_message(client,userdata,message):
         data = dict(
             message = message.payload.decode()
         )
-        # 타임스탬프 찍어서 json형태로 allData 리스트에 저장. 
+        # 타임스탬프 찍어서 json형태로 allData 리스트에 저장.
         allData = allData + trans.transMessageToJson(trans.timestamp(data))
 
 @app.route('/index.html')
@@ -83,5 +83,5 @@ def elements():
         _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(trans.emptyJson(),3),classifyIdGroup) #데이터 그룹별로 분리하고 정리
         return render_template('elements.html',jsonData=_jsonData)
     else:
-        _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(allData,4),classifyIdGroup) #데이터 그룹별로 분리하고 정리
+        _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(allData,20),classifyIdGroup) #데이터 그룹별로 분리하고 정리
         return render_template('elements.html',jsonData=_jsonData)
