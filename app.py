@@ -35,9 +35,9 @@ if os.environ.get('WERKZEUG_RUN_MAIN') == 'true': #flask에서 디버그모드�
     if __name__ == '__main__':
         app.run(debug=True, host='0.0.0.0')
     mqtt =Mqtt(app)
-    #sched = BackgroundScheduler(daemon=True,timezone='Asia/Seoul')
-    #sched.add_job(schedulerFunction,'cron', minute = '0') #시간(스캐줄)에 맞춰 함수부르기
-    #sched.start()
+    sched = BackgroundScheduler(daemon=True,timezone='Asia/Seoul')
+    sched.add_job(schedulerFunction,'cron', second = '0',misfire_grace_time=60) #시간(스캐줄)에 맞춰 함수부르기
+    sched.start()
 
 # 처음 한번 동작하는 코드 끝 #
 
@@ -55,6 +55,9 @@ def handle_connect(clinet,userdata,flags,rc):
 @mqtt.on_message() #메세지 받을 때 호출되는 함수
 def handle_mqtt_message(client,userdata,message):
     global data
+
+
+    
     global allData
     # payload = message
     print('get message!')
@@ -62,7 +65,7 @@ def handle_mqtt_message(client,userdata,message):
         data = dict(
             message = message.payload.decode()
         )
-        # 타임스탬프 찍어서 json형태로 allData 리스트에 저장. 
+        # 타임스탬프 찍어서 json형태로 allData 리스트에 저장.
         allData = allData + trans.transMessageToJson(trans.timestamp(data))
 
 @app.route('/index.html')
@@ -83,5 +86,5 @@ def elements():
         _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(trans.emptyJson(),3),classifyIdGroup) #데이터 그룹별로 분리하고 정리
         return render_template('elements.html',jsonData=_jsonData)
     else:
-        _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(allData,3),classifyIdGroup) #데이터 그룹별로 분리하고 정리
+        _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(allData,20),classifyIdGroup) #데이터 그룹별로 분리하고 정리
         return render_template('elements.html',jsonData=_jsonData)

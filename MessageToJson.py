@@ -79,6 +79,7 @@ class MessageToJson:
 
     def saveJsonInListAuto(self,_list):
         ''' 파일이름을 리스트에 시작time과 끝 time으로 저장해주는 함수
+            저장경로는 data폴더
 
             args:
                 _list : json이 저장된 리스트
@@ -89,6 +90,7 @@ class MessageToJson:
         first_time = _list[0]['time'] #json으로 변환된 시간을 다시 원래 struct_time 형태로 변환
         last_time = _list[-1]['time']
         filename ='('+first_time+')_('+last_time+').json'
+        filename = 'data/'+filename 
         print(filename)
         self.saveJsonInList(filename,_list)
         
