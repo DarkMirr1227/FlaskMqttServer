@@ -125,18 +125,21 @@
 														<h3>Graph (Group2)</h3>
 														<canvas id="canvas2_t"></canvas>
 														<canvas id="canvas2_c"></canvas>
+														<canvas id="canvas2_v"></canvas>
 													</div>
 
 													<div>
 														<h3>Graph (Group3)</h3>
 														<canvas id="canvas3_t"></canvas>
 														<canvas id="canvas3_c"></canvas>
+														<canvas id="canvas3_v"></canvas>
 													</div>
 
 													<div>
 														<h3>Graph (Group4)</h3>
 														<canvas id="canvas4_t"></canvas>
 														<canvas id="canvas4_c"></canvas>
+														<canvas id="canvas4_v"></canvas>
 													</div>
 
 													<h4>Alternate</h4>
@@ -552,6 +555,838 @@
 						}
 					}
 				});
+				new Chart(document.getElementById("canvas2_t").getContext('2d'), {
+					type: 'line',
+					data: {
+						labels: [ {% for item in jsonData[0] %}
+								{% if item['id']=='6' %}
+                                {{item['time'][-6:-4]}},
+								{% endif %}
+                                {% endfor %}],
+						datasets: [{
+							label: 'id 6',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='6' %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(247, 16, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 7',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='7' %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 200, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 8',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='8' %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(180, 174, 200, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 9',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='9' %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 100, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 10',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='10' %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 200, 1)",
+							fill: false,
+							lineTension: 0
+						}]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: '온도 변화'
+						},
+						tooltips: {
+							mode: 'index',
+							intersect: false,
+						},
+						hover: {
+							mode: 'nearest',
+							intersect: true
+						},
+						scales: {
+							xAxes: [{
+								display: true,
+								scaleLabel: {
+									display: true,
+								}
+							}],
+							yAxes: [{
+								display: true,
+								ticks: {
+								},
+								scaleLabel: {
+									display: true,
+								}
+							}]
+						}
+					}
+				});	
+
+				new Chart(document.getElementById("canvas2_c").getContext('2d'), {
+					type: 'line',
+					data: {
+						labels:[ {% for item in jsonData[0] %}
+								{% if item['id']=='6' %}
+                                {{item['time'][-6:-4]}},
+								{% endif %}
+                                {% endfor %}] ,
+						datasets: [{
+							label: 'id 6',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='6' %}
+                                {{(item['current'][0]|float + item['current'][1]|float+ item['current'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(247, 16, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 7',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='7' %}
+                                {{(item['current'][0]|float + item['current'][1]|float+ item['current'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 200, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 8',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='8' %}
+                                {{(item['current'][0]|float + item['current'][1]|float+ item['current'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(180, 174, 200, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 9',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='9' %}
+                                {{(item['current'][0]|float + item['current'][1]|float+ item['current'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 100, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 10',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='10' %}
+                                {{(item['current'][0]|float + item['current'][1]|float+ item['current'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 200, 1)",
+							fill: false,
+							lineTension: 0
+						}]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: '전류 변화'
+						},
+						tooltips: {
+							mode: 'index',
+							intersect: false,
+						},
+						hover: {
+							mode: 'nearest',
+							intersect: true
+						},
+						scales: {
+							xAxes: [{
+								display: true,
+								scaleLabel: {
+									display: true,
+								}
+							}],
+							yAxes: [{
+								display: true,
+								ticks: {
+								},
+								scaleLabel: {
+									display: true,
+								}
+							}]
+						}
+					}
+				});	
+				new Chart(document.getElementById("canvas2_v").getContext('2d'), {
+					type: 'line',
+					data: {
+						labels:[ {% for item in jsonData[0] %}
+								{% if item['id']=='6' %}
+                                {{item['time'][-6:-4]}},
+								{% endif %}
+                                {% endfor %}] ,
+						datasets: [{
+							label: 'id 6',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='6' %}
+                                {{item['vibration']|float}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(247, 16, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 7',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='7' %}
+                                {{item['vibration']|float}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 200, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 8',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='8' %}
+                                {{item['vibration']|float}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(180, 174, 200, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 9',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='9' %}
+                                {{item['vibration']|float}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 100, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 10',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='10' %}
+								{{item['vibration']|float}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 200, 1)",
+							fill: false,
+							lineTension: 0
+						}]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: '진동 변화'
+						},
+						tooltips: {
+							mode: 'index',
+							intersect: false,
+						},
+						hover: {
+							mode: 'nearest',
+							intersect: true
+						},
+						scales: {
+							xAxes: [{
+								display: true,
+								scaleLabel: {
+									display: true,
+								}
+							}],
+							yAxes: [{
+								display: true,
+								ticks: {
+								},
+								scaleLabel: {
+									display: true,
+								}
+							}]
+						}
+					}
+				});
+				new Chart(document.getElementById("canvas3_t").getContext('2d'), {
+					type: 'line',
+					data: {
+						labels: [ {% for item in jsonData[0] %}
+								{% if item['id']=='11' %}
+                                {{item['time'][-6:-4]}},
+								{% endif %}
+                                {% endfor %}],
+						datasets: [{
+							label: 'id 11',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='11' %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(247, 16, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 12',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='12' %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 200, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 13',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='13' %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(180, 174, 200, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 14',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='14' %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 100, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 15',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='15' %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 200, 1)",
+							fill: false,
+							lineTension: 0
+						}]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: '온도 변화'
+						},
+						tooltips: {
+							mode: 'index',
+							intersect: false,
+						},
+						hover: {
+							mode: 'nearest',
+							intersect: true
+						},
+						scales: {
+							xAxes: [{
+								display: true,
+								scaleLabel: {
+									display: true,
+								}
+							}],
+							yAxes: [{
+								display: true,
+								ticks: {
+								},
+								scaleLabel: {
+									display: true,
+								}
+							}]
+						}
+					}
+				});	
+
+				new Chart(document.getElementById("canvas3_c").getContext('2d'), {
+					type: 'line',
+					data: {
+						labels:[ {% for item in jsonData[0] %}
+								{% if item['id']=='11' %}
+                                {{item['time'][-6:-4]}},
+								{% endif %}
+                                {% endfor %}] ,
+						datasets: [{
+							label: 'id 11',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='11' %}
+                                {{(item['current'][0]|float + item['current'][1]|float+ item['current'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(247, 16, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 12',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='12' %}
+                                {{(item['current'][0]|float + item['current'][1]|float+ item['current'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 200, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 13',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='13' %}
+                                {{(item['current'][0]|float + item['current'][1]|float+ item['current'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(180, 174, 200, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 14',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='14' %}
+                                {{(item['current'][0]|float + item['current'][1]|float+ item['current'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 100, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 15',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='15' %}
+                                {{(item['current'][0]|float + item['current'][1]|float+ item['current'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 200, 1)",
+							fill: false,
+							lineTension: 0
+						}]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: '전류 변화'
+						},
+						tooltips: {
+							mode: 'index',
+							intersect: false,
+						},
+						hover: {
+							mode: 'nearest',
+							intersect: true
+						},
+						scales: {
+							xAxes: [{
+								display: true,
+								scaleLabel: {
+									display: true,
+								}
+							}],
+							yAxes: [{
+								display: true,
+								ticks: {
+								},
+								scaleLabel: {
+									display: true,
+								}
+							}]
+						}
+					}
+				});	
+				new Chart(document.getElementById("canvas3_v").getContext('2d'), {
+					type: 'line',
+					data: {
+						labels:[ {% for item in jsonData[0] %}
+								{% if item['id']=='11' %}
+                                {{item['time'][-6:-4]}},
+								{% endif %}
+                                {% endfor %}] ,
+						datasets: [{
+							label: 'id 11',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='11' %}
+                                {{item['vibration']|float}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(247, 16, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 12',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='12' %}
+                                {{item['vibration']|float}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 200, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 13',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='13' %}
+                                {{item['vibration']|float}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(180, 174, 200, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 14',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='14' %}
+                                {{item['vibration']|float}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 100, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 15',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='15' %}
+								{{item['vibration']|float}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 200, 1)",
+							fill: false,
+							lineTension: 0
+						}]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: '진동 변화'
+						},
+						tooltips: {
+							mode: 'index',
+							intersect: false,
+						},
+						hover: {
+							mode: 'nearest',
+							intersect: true
+						},
+						scales: {
+							xAxes: [{
+								display: true,
+								scaleLabel: {
+									display: true,
+								}
+							}],
+							yAxes: [{
+								display: true,
+								ticks: {
+								},
+								scaleLabel: {
+									display: true,
+								}
+							}]
+						}
+					}
+				});
+				new Chart(document.getElementById("canvas4_t").getContext('2d'), {
+					type: 'line',
+					data: {
+						labels: [ {% for item in jsonData[0] %}
+								{% if item['id']=='16' %}
+                                {{item['time'][-6:-4]}},
+								{% endif %}
+                                {% endfor %}],
+						datasets: [{
+							label: 'id 16',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='16' %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(247, 16, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 17',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='17' %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 200, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 18',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='18' %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(180, 174, 200, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 19',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='19' %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 100, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 20',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='20' %}
+                                {{(item['temperature'][0]|float + item['temperature'][1]|float+ item['temperature'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 200, 1)",
+							fill: false,
+							lineTension: 0
+						}]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: '온도 변화'
+						},
+						tooltips: {
+							mode: 'index',
+							intersect: false,
+						},
+						hover: {
+							mode: 'nearest',
+							intersect: true
+						},
+						scales: {
+							xAxes: [{
+								display: true,
+								scaleLabel: {
+									display: true,
+								}
+							}],
+							yAxes: [{
+								display: true,
+								ticks: {
+								},
+								scaleLabel: {
+									display: true,
+								}
+							}]
+						}
+					}
+				});	
+
+				new Chart(document.getElementById("canvas4_c").getContext('2d'), {
+					type: 'line',
+					data: {
+						labels:[ {% for item in jsonData[0] %}
+								{% if item['id']=='16' %}
+                                {{item['time'][-6:-4]}},
+								{% endif %}
+                                {% endfor %}] ,
+						datasets: [{
+							label: 'id 16',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='16' %}
+                                {{(item['current'][0]|float + item['current'][1]|float+ item['current'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(247, 16, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 17',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='17' %}
+                                {{(item['current'][0]|float + item['current'][1]|float+ item['current'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 200, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 18',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='18' %}
+                                {{(item['current'][0]|float + item['current'][1]|float+ item['current'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(180, 174, 200, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 19',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='19' %}
+                                {{(item['current'][0]|float + item['current'][1]|float+ item['current'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 100, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 20',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='20' %}
+                                {{(item['current'][0]|float + item['current'][1]|float+ item['current'][2]|float)/3}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 200, 1)",
+							fill: false,
+							lineTension: 0
+						}]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: '전류 변화'
+						},
+						tooltips: {
+							mode: 'index',
+							intersect: false,
+						},
+						hover: {
+							mode: 'nearest',
+							intersect: true
+						},
+						scales: {
+							xAxes: [{
+								display: true,
+								scaleLabel: {
+									display: true,
+								}
+							}],
+							yAxes: [{
+								display: true,
+								ticks: {
+								},
+								scaleLabel: {
+									display: true,
+								}
+							}]
+						}
+					}
+				});	
+				new Chart(document.getElementById("canvas4_v").getContext('2d'), {
+					type: 'line',
+					data: {
+						labels:[ {% for item in jsonData[0] %}
+								{% if item['id']=='16' %}
+                                {{item['time'][-6:-4]}},
+								{% endif %}
+                                {% endfor %}] ,
+						datasets: [{
+							label: 'id 16',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='16' %}
+                                {{item['vibration']|float}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(247, 16, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 17',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='17' %}
+                                {{item['vibration']|float}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 200, 74, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 18',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='18' %}
+                                {{item['vibration']|float}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(180, 174, 200, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 19',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='19' %}
+                                {{item['vibration']|float}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 100, 1)",
+							fill: false,
+							lineTension: 0
+						},{
+							label: 'id 20',
+							data: [ {% for item in jsonData[0] %}
+								{% if item['id']=='20' %}
+								{{item['vibration']|float}},
+								{% endif %}
+                                {% endfor %}],
+							borderColor: "rgba(120, 74, 200, 1)",
+							fill: false,
+							lineTension: 0
+						}]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: '진동 변화'
+						},
+						tooltips: {
+							mode: 'index',
+							intersect: false,
+						},
+						hover: {
+							mode: 'nearest',
+							intersect: true
+						},
+						scales: {
+							xAxes: [{
+								display: true,
+								scaleLabel: {
+									display: true,
+								}
+							}],
+							yAxes: [{
+								display: true,
+								ticks: {
+								},
+								scaleLabel: {
+									display: true,
+								}
+							}]
+						}
+					}
+				});
+
 			</script>
 
 

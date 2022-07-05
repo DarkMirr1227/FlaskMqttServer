@@ -36,9 +36,8 @@ if os.environ.get('WERKZEUG_RUN_MAIN') == 'true': #flask에서 디버그모드�
         app.run(debug=True, host='0.0.0.0')
     mqtt =Mqtt(app)
     sched = BackgroundScheduler(daemon=True,timezone='Asia/Seoul')
-    sched.add_job(schedulerFunction,'cron', second = '0',misfire_grace_time=60) #시간(스캐줄)에 맞춰 함수부르기
+    sched.add_job(schedulerFunction,'cron', minute = '0',misfire_grace_time=15) #시간(스캐줄)에 맞춰 함수부르기
     sched.start()
-
 # 처음 한번 동작하는 코드 끝 #
 
 
