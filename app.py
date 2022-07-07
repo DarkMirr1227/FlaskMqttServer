@@ -74,7 +74,7 @@ def main():
 
 @app.route('/generic.html')
 def generic():
-    return render_template('generic.html',jsonData=allData)
+    return render_template('generic.html',jsonData=allData,listCount =len(allData))
 
 @app.route('/elements.html')
 def elements():
@@ -86,4 +86,5 @@ def elements():
         return render_template('elements.html',jsonData=_jsonData)
     else:
         _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(allData,20),classifyIdGroup) #데이터 그룹별로 분리하고 정리
+        print(_jsonData[1])
         return render_template('elements.html',jsonData=_jsonData)
