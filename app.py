@@ -21,7 +21,6 @@ def schedulerFunction():
 
 # 처음 한번 동작하는 코드 시작 #
 if os.environ.get('WERKZEUG_RUN_MAIN') == 'true': #flask에서 디버그모드에서 2번 반복되는 것을 방지하기 위함 초기화할 함수는 여기서만
-    print("INIT")
     classifyIdGroup = [[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15],[16,17,18,19,20]] #그룹별로 묶일 id 셋팅
     app = Flask(__name__)
     app.config['MQTT_BROKER_URL'] = '127.0.0.1'
@@ -36,7 +35,7 @@ if os.environ.get('WERKZEUG_RUN_MAIN') == 'true': #flask에서 디버그모드�
         app.run(debug=True, host='0.0.0.0')
     mqtt =Mqtt(app)
     sched = BackgroundScheduler(daemon=True,timezone='Asia/Seoul')
-    sched.add_job(schedulerFunction,'cron', minute = '0',misfire_grace_time=15) #시간(스캐줄)에 맞춰 함수부르기
+    sched.add_job(schedulerFunction,'cron', minute = '0',misfire_grace_time=15) #시간(스캐줄)에 맞춰 함수부르기 / misfire_grace_time =>정해진 시간에 스케줄러가 못 돌아갔을 때, (15)초동안 스케줄러가 돌수 있는 환경이 되면 돌아갈 수 있게 해줌.
     sched.start()
 # 처음 한번 동작하는 코드 끝 #
 
@@ -86,5 +85,4 @@ def elements():
         return render_template('elements.html',jsonData=_jsonData)
     else:
         _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(allData,20),classifyIdGroup) #데이터 그룹별로 분리하고 정리
-        print(_jsonData[1])
         return render_template('elements.html',jsonData=_jsonData)
