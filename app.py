@@ -1,5 +1,6 @@
 # pip install Flask
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from flask import jsonify
 # pip install Flask-MQTT
 from flask_mqtt import Mqtt
 # pip install apscheduler
@@ -40,7 +41,6 @@ if os.environ.get('WERKZEUG_RUN_MAIN') == 'true': #flask에서 디버그모드�
 # 처음 한번 동작하는 코드 끝 #
 
 
-
 def create_app():
     app = Flask(__name__)
     mqtt.init_app(app)
@@ -52,10 +52,7 @@ def handle_connect(clinet,userdata,flags,rc):
 
 @mqtt.on_message() #메세지 받을 때 호출되는 함수
 def handle_mqtt_message(client,userdata,message):
-    global data
-
-
-    
+    global data  
     global allData
     # payload = message
     print('get message!')
@@ -73,16 +70,32 @@ def main():
 
 @app.route('/generic.html')
 def generic():
-    return render_template('generic.html',jsonData=allData,listCount =len(allData))
+    return render_template('generic.html',jsonData=allData,listCount =len(allData)) 
 
-@app.route('/elements.html')
+@app.route('/elements.html',methods=["GET","POST"])
 def elements():
     global allData
     global classifyIdGroup
-    print('allData: ',allData)
-    if len(allData) < 2 :
-        _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(trans.emptyJson(),3),classifyIdGroup) #데이터 그룹별로 분리하고 정리
-        return render_template('elements.html',jsonData=_jsonData)
+    if request.method == "POST":
+        jsonData=dataManage.classifyGroup(dataManage.extractRecentData(allData,20),classifyIdGroup) #데이터 그룹별로 분리하고 정리
+        return jsonify(jsonData)
     else:
-        _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(allData,20),classifyIdGroup) #데이터 그룹별로 분리하고 정리
-        return render_template('elements.html',jsonData=_jsonData)
+        if len(allData) < 2 :
+            _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(trans.emptyJson(),3),classifyIdGroup) #데이터 그룹별로 분리하고 정리
+            return render_template('elements.html',jsonData=_jsonData)
+        else:
+            _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(allData,20),classifyIdGroup) #데이터 그룹별로 분리하고 정리
+            return render_template('elements.html',jsonData=_jsonData)
+
+@app.route('/database.json',methods=["POST"])
+def database():
+    global allData
+    global classifyIdGroup
+    jsonData = dataManage.extractRecentData(allData,20) #데이터 그룹별로 분리하고 정리
+    trans.saveJsonInList("templates/database.json",jsonData)
+    return jsonify(trans.loadJsonfile("templates/database.json"))
+
+@app.route('/graph.html')
+def graph_html():
+    _jsonData=dataManage.classifyGroup(dataManage.extractRecentData(allData,20),classifyIdGroup) #데이터 그룹별로 분리하고 정리
+    return render_template('graph.html',jsonData=_jsonData)
