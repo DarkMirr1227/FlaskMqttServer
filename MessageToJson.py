@@ -99,7 +99,7 @@ class MessageToJson:
         '''저장된 json파일을 다시 읽어오는 함수 (읽어서 Json형태로 변환)
 
             args:
-                _filename : 읽어올 파일 이름,경로       
+                _filename : 읽어올 파일 이름,경로 (확장자까지 써주기)
             return:
                 json_object
         '''

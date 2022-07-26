@@ -39,7 +39,7 @@
 									</header>
 
 									<span class="image main"><img src="{{ url_for('static',filename='images/pic11.jpg') }}" alt="" /></span>
-
+									{{listCount}}
 									<p> {% for item in jsonData %}
 									{{item}}
 									<br> 			
@@ -76,11 +76,13 @@
 						<div class="inner">
 
 							<!-- Search -->
+							<!--
 								<section id="search" class="alt">
 									<form method="post" action="#">
 										<input type="text" name="query" id="query" placeholder="Search" />
 									</form>
 								</section>
+							-->
 
 							<!-- Menu -->
 							<nav id="menu">
